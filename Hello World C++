@@ -1,0 +1,15 @@
+//Author:		    Brandon C. Corbett
+//Source file:	projIDE.cpp
+//Description:	Hello World Program
+//IDE used:		  Visual Studio C++ 2012 Professional Edition
+
+#include<iostream>
+using namespace std;
+
+int main()
+{
+	cout << "	Hello there world!\n";
+
+	system("pause");
+	return 0;
+}
