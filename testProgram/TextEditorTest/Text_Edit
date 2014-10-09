@@ -1,0 +1,88 @@
+/Author:		Brandon Corbett
+//Source file:	Proj4.cpp
+//Description:	Utilizes functions to create a program that allows the user to choose a shape to be drawn on the screen that is the width and 
+//				they input. 
+//IDE used:		Visual Studio C++ 2013 w/update 3 Professional Edition
+
+#include <fstream>
+#include <iostream>
+#include <cstdlib>
+using namespace std;
+
+void editText(ifstream& in_stream, ofstream& out_stream);
+
+int main()
+{
+	ifstream fin;
+	ofstream fout;
+
+	cout << "\tBegin editing files.\n\n";
+
+	fin.open("C:\\TestFiles\\textIn.txt");
+	if (fin.fail())
+	{
+		cout << "\tInput file opening failed.\n";
+		exit(1);
+	}
+
+	fout.open("C:\\TestFiles\\textOut.txt");
+	if (fout.fail())
+	{
+		cout << "\tOutput file opening failed.\n";
+		exit(1);
+	}
+
+	cout << "\tThe Author of this text is: ";
+
+	for (int i = 0; i < 8; i++)
+	{
+		char symbol;
+		fin.get(symbol);
+		symbol = toupper(symbol + 10);
+		cout << symbol;
+	}
+
+	cout << endl;
+	editText(fin, fout);
+	fin.close();
+	fout.close();
+
+	cout << "\n\n\tEnd of editing files.\n";
+	system("pause");
+	return 0;
+}
+
+void editText(ifstream& in_stream, ofstream& out_stream)
+{
+	char next;
+	int dashCount = 0, numCount = 0;
+	
+	for (int i = 0; i < 9; i++)
+	{
+		in_stream.get(next);
+		next = toupper(next);
+		out_stream << next;
+	}
+
+	in_stream.get(next);
+
+	while (!in_stream.eof())
+	{
+		if (next == '-')
+		{
+			out_stream.put(' ');
+			dashCount++;
+		}
+		else
+			if (isdigit(next))
+			{
+				out_stream.put('#');
+				numCount++;
+			}
+			else
+			out_stream.put(tolower(next));
+
+		in_stream.get(next);
+	}
+	cout << "\tThere were " << dashCount << " dashes and " << numCount << " numbers." << endl;
+}
