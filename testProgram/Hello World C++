@@ -1,7 +1,7 @@
-//Author:		    Brandon C. Corbett
+//Author:	Brandon C. Corbett
 //Source file:	projIDE.cpp
 //Description:	Hello World Program
-//IDE used:		  Visual Studio C++ 2012 Professional Edition
+//IDE used:	Visual Studio C++ 2012 Professional Edition
 
 #include<iostream>
 using namespace std;
