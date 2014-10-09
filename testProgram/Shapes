@@ -1,8 +1,8 @@
-//Author:		    Brandon Corbett
+//Author:	Brandon Corbett
 //Source file:	Proj3.cpp
 //Description:	Utilizes functions to create a program that allows the user to choose a shape to be drawn on the screen that is the width and 
-//				      they input. 
-//IDE used:		  Visual Studio C++ 2012 Professional Edition
+//		they input. 
+//IDE used:	Visual Studio C++ 2012 Professional Edition
 
 #include <iostream>
 #include <iomanip>
