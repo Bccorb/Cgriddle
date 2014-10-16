@@ -1,8 +1,8 @@
-/Author:		Brandon Corbett
+//Author:	Brandon Corbett
 //Source file:	Proj4.cpp
 //Description:	Utilizes functions to create a program that allows the user to choose a shape to be drawn on the screen that is the width and 
-//				they input. 
-//IDE used:		Visual Studio C++ 2013 w/update 3 Professional Edition
+//		they input. 
+//IDE used:	Visual Studio C++ 2013 w/update 3 Professional Edition
 
 #include <fstream>
 #include <iostream>
@@ -10,6 +10,7 @@
 using namespace std;
 
 void editText(ifstream& in_stream, ofstream& out_stream);
+void decryption(ifstream& in_stream);
 
 int main()
 {
@@ -31,16 +32,8 @@ int main()
 		cout << "\tOutput file opening failed.\n";
 		exit(1);
 	}
-
-	cout << "\tThe Author of this text is: ";
-
-	for (int i = 0; i < 8; i++)
-	{
-		char symbol;
-		fin.get(symbol);
-		symbol = toupper(symbol + 10);
-		cout << symbol;
-	}
+	
+	decryption(fin);
 
 	cout << endl;
 	editText(fin, fout);
@@ -85,4 +78,17 @@ void editText(ifstream& in_stream, ofstream& out_stream)
 		in_stream.get(next);
 	}
 	cout << "\tThere were " << dashCount << " dashes and " << numCount << " numbers." << endl;
+}
+
+void decryption(ifstream& in_stream)
+{
+	cout << "\tThe Author of this text is: ";
+
+	for (int i = 0; i < 8; i++)
+	{
+		char symbol;
+		in_stream.get(symbol);
+		symbol = toupper(symbol + 10);
+		cout << symbol;
+	}
 }
