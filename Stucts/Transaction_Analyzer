@@ -1,0 +1,147 @@
+// Author:			Brandon C Corbett	
+// Source file:		source.cpp
+// Description:		anaylzes a file of account information and displays a report on the data.
+// Compiler used:	Visual Studio 2010 Pro.
+
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+using namespace std; 
+
+	struct transaction
+	{
+		int code;
+		double amount;
+	};
+
+	struct totals
+	{
+		double credits;
+		double debits;
+		double serviceCharges;
+		int transCount;
+	};
+
+// Function Prototypes
+	void displayTitle();
+	double getBegBal(ifstream&);
+	void displayBal(double);
+	void getData(ifstream&, transaction&);
+	void displayReport(totals& total);
+	double processCheck(totals&, double, double);
+	double processDeposit(totals&, double, double);
+	double processATM(totals&, double, double);
+	double processSvcChg(totals&, double);
+
+
+//Global Constants
+const double	CHARGE = 10,
+				ATMFEE =  2;
+
+int main()
+{
+	//Variable Declarations
+	double balance;
+	transaction trans;
+	totals total = {0, 0, 0, 0};
+	ifstream acctInfo;
+
+	cout.setf(ios::fixed);
+	cout.setf(ios::showpoint);
+	cout.precision(2);
+
+	acctInfo.open("c:\\C++testfiles\\checkIn.dat");
+
+	displayTitle();
+	balance = getBegBal(acctInfo);
+	displayBal(balance);
+	cout << endl;
+	
+	while(!acctInfo.eof())
+	{
+		getData(acctInfo, trans);
+
+		switch(trans.code)
+		{
+			case 1: balance = processCheck(total, balance, trans.amount); break;
+			case 2: balance = processDeposit(total, balance, trans.amount); break;
+			case 3: balance = processATM(total, balance, trans.amount); break;
+		}
+		displayBal(balance);
+		if(balance < 0)
+			balance = processSvcChg(total, balance);
+	}
+	displayReport(total);
+	cin.get();
+return 0;
+}	
+
+
+	void displayTitle()
+	{
+		cout << "\n\t\tCheck Register\n\n";
+	}
+
+	void displayBal(double balance)
+	{
+		cout << "\tCurrent Amount: " << balance;
+	}
+
+	double getBegBal(ifstream& file)
+	{
+		double balance;
+		file >> balance;
+
+		return balance;
+	}
+
+	void getData(ifstream& file, transaction& trans)
+	{
+		file >> trans.code >> trans.amount;
+	}
+
+	double processCheck(totals& total, double bal, double amt)
+	{
+		cout << "\n  Check =    " << setw(10) << amt;
+		total.debits += amt;
+		total.transCount++;
+
+		return (bal - amt);
+	}
+
+	double processDeposit(totals& total, double bal, double amt)
+	{
+		cout << "\n  Deposit =  " << setw(10) << amt;
+		total.credits += amt;
+		total.transCount++;
+
+		return (bal + amt);
+	}
+	double processATM(totals& total, double bal, double amt)
+	{
+		cout << "\n  ATM     =  " << setw(10) << amt;
+		bal = bal - amt;
+		displayBal(bal);
+		bal = bal - ATMFEE;
+		cout << "\n  ATM Fee =  " << setw(10) << ATMFEE;
+		total.serviceCharges += ATMFEE;
+
+		return (bal);
+	}
+	double processSvcChg(totals& total, double bal)
+	{
+		cout << "\n  Service chg =" << setw(8) << CHARGE;
+		bal = bal - CHARGE;
+		displayBal(bal);
+		total.serviceCharges += CHARGE;
+
+		return (bal);
+	}
+
+	void displayReport(totals& total)
+	{
+		cout << "\n\n\tThere were " << total.transCount << " transactions." << endl;
+		cout << "\n\t" << total.debits << " in charges." << endl;
+		cout << "\n\t" << total.credits << " in deposits." << endl;
+		cout << "\n\t" << total.serviceCharges << " in service charges." << endl;
+	}
