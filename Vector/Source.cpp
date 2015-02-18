@@ -1,9 +1,9 @@
 // Program:		Project 6
-// Programmer:	Brandon Corbett
+// Programmer:		Brandon Corbett
 // Date:		Nov 23, 2014
-// Description:	Program accepts usernames and passwords, stores them as vectors then when prompted
-//				displays all entries. 
-// IDE used:	Visual Studio 2013 w/update 3
+// Description:		Program accepts usernames and passwords, stores them as vectors then when prompted
+//			displays all entries. 
+// IDE used:		Visual Studio 2013 w/update 3
 
 #include <iostream>
 #include <cstdlib>
